@@ -12,7 +12,7 @@
 		<div class='nav'>
 			<select id='FP'></select><br>
 			
-			<button id='btnFP'>Cycles view</button>
+			<select id='ciclosFP'></select><br>
 
 		</div>
 		<!-- nav -->

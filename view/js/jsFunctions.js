@@ -18,6 +18,7 @@ $(document).ready(function(){
        		}
 			   		
        		$("#FP").append(newRow); // add the new row to the container
+       		$("#ciclosFP").hide();
 		},
        	error : function(xhr) {
    			alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -28,8 +29,9 @@ $(document).ready(function(){
 	
 	
 	
-	$("#btnFP").click(function(){
-		
+	$("#FP").change(function(){
+   		$("#ciclosFP").show();
+
 		var familia=$("#FP").val();
 		
 //		var familiaEuEs = familia.split('/'); 
@@ -42,29 +44,16 @@ $(document).ready(function(){
 	       	url: "controller/cFamiliaCiclos.php", 
 	       	dataType:"text",
 	    	success: function(result){  
-	       		
+	       		$("#ciclosFP").empty(); // removes all the previous content in the container
+
 	    		result= JSON.parse(result.slice(3));
 	    		console.log(result);
+	       		var newRow="";
+	       		for(var i=0;i<result.length;i++){
+	       			newRow += "<option value='"+result[i].Cod_ciclo+"'>"+result[i].Nom_ciclo_eu+"/"+result[i].Nom_ciclo_es+"</option>";		
+	       		}
+	       		$("#ciclosFP").append(newRow); // add the new row to the container
 
-//	       		var countries =result;
-//	
-//	       		$("#continentCountries").empty(); // removes all the previous content in the container
-//	       		
-//	       		var newRow ="<h2>"+continent+" Countries</h2>";
-//	  			newRow +="<table > ";
-//				newRow +="<tr><th>COUNTRY</th><th>CONTINENT</th><th>CODE</th><th>POPULATION</th></tr>";
-//	       		
-//				$.each(countries,function(index,info) { 
-//							
-//					newRow += "<tr>" +"<td>"+info.Name+"</td>"
-//										+"<td>"+info.Continent+"</td>"
-//										+"<td>"+info.Code+"</td>"
-//										+"<td>"+info.Population+"</td>"									
-//									+"</tr>";	
-//				});
-//	       		newRow +="</table>";   
-//	       		
-//	       		$("#continentCountries").append(newRow); // add the table to the container
 			},
 	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);

@@ -63,6 +63,7 @@ class ciclosModel extends ciclosClass{
          {    
             $newCiclo=new ciclosModel();
             
+            $newCiclo->setCod_ciclo($row['cod_ciclo']);
             $newCiclo->setNom_ciclo_eu($row['nom_ciclo_eu']);
             $newCiclo->setNom_ciclo_es($row['nom_ciclo_es']);
             
