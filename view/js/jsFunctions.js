@@ -7,7 +7,7 @@ $(document).ready(function(){
     	dataType: "json",  //type of the result it is not necessary JSON.parse
        	
     	success: function(result){  
-       		console.log(result);
+//       		console.log(result);
     	
 
        		$("#FP").empty(); // removes all the previous content in the container
@@ -28,38 +28,42 @@ $(document).ready(function(){
 	
 	
 	
-	$("#btnContinent").click(function(){
+	$("#btnFP").click(function(){
 		
-		var continent=$("#cmbContinent").val();
+		var familia=$("#FP").val();
+		
+		var familiaEuEs = familia.split('/'); 
+		console.log("Familia Eu: "+familiaEuEs[0]+"  Familia Es: "+familiaEuEs[1]);
+		
 		$.ajax({
 	       	type:"GET",
-	       	data:{'continent':continent},
-	       	url: "controller/cContinentCountries.php", 
+	       	data:{'familiaEu':familiaEuEs[0]},
+	       	url: "controller/cFamiliaCiclos.php", 
 	    	dataType: "json",  //type of the result it is not necessary JSON.parse
 	       	
 	    	success: function(result){  
 	       		
 	    		console.log(result);
 	    		
-	       		var countries =result;
-	
-	       		$("#continentCountries").empty(); // removes all the previous content in the container
-	       		
-	       		var newRow ="<h2>"+continent+" Countries</h2>";
-	  			newRow +="<table > ";
-				newRow +="<tr><th>COUNTRY</th><th>CONTINENT</th><th>CODE</th><th>POPULATION</th></tr>";
-	       		
-				$.each(countries,function(index,info) { 
-							
-					newRow += "<tr>" +"<td>"+info.Name+"</td>"
-										+"<td>"+info.Continent+"</td>"
-										+"<td>"+info.Code+"</td>"
-										+"<td>"+info.Population+"</td>"									
-									+"</tr>";	
-				});
-	       		newRow +="</table>";   
-	       		
-	       		$("#continentCountries").append(newRow); // add the table to the container
+//	       		var countries =result;
+//	
+//	       		$("#continentCountries").empty(); // removes all the previous content in the container
+//	       		
+//	       		var newRow ="<h2>"+continent+" Countries</h2>";
+//	  			newRow +="<table > ";
+//				newRow +="<tr><th>COUNTRY</th><th>CONTINENT</th><th>CODE</th><th>POPULATION</th></tr>";
+//	       		
+//				$.each(countries,function(index,info) { 
+//							
+//					newRow += "<tr>" +"<td>"+info.Name+"</td>"
+//										+"<td>"+info.Continent+"</td>"
+//										+"<td>"+info.Code+"</td>"
+//										+"<td>"+info.Population+"</td>"									
+//									+"</tr>";	
+//				});
+//	       		newRow +="</table>";   
+//	       		
+//	       		$("#continentCountries").append(newRow); // add the table to the container
 			},
 	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);

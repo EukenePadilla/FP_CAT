@@ -53,6 +53,13 @@ class familiasModel extends familiasClass{
     {
         $this->OpenConnect();
         $sql="call spFindAllFamiliasProfesionales()";
+        
+/*         DELIMITER $$
+        CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindAllFamiliasProfesionales`()
+        NO SQL
+        select * from familias$$
+        DELIMITER ; */
+        
         $result = $this->link->query($sql);
         
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -69,6 +76,30 @@ class familiasModel extends familiasClass{
         mysqli_free_result($result);
         
         $this->CloseConnect();
+    }
+    
+    function setFindCodFamilia(){
+        $this->OpenConnect();
+                $familiaEu=$this->Nom_familia_eu;
+                $sql="call spFindCodFamilia('$familiaEu')";
+                
+/*                 DELIMITER $$
+                CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCodFamilia`(IN `pFamiliaEu` VARCHAR(40))
+                NO SQL
+                select familias.cod_familia from familias where familias.nom_familia_eu=pFamiliaEu$$
+                DELIMITER ; */
+                
+                $result = $this->link->query($sql);
+                 if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                     {
+                    $this->setCod_familia($row['cod_familia']);
+                     }               
+                     
+                 mysqli_free_result($result);
+               $this->CloseConnect();
+               return $this;
+               
+              
     }
     
     function getFamiliasProfesionalesJson()

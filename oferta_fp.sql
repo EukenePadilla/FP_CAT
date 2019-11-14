@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2018 a las 21:42:54
--- Versión del servidor: 10.1.19-MariaDB
--- Versión de PHP: 5.6.28
+-- Tiempo de generación: 14-11-2019 a las 04:08:08
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 5.6.38
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,6 +21,21 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `oferta_fp`
 --
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindAllFamiliasProfesionales` ()  NO SQL
+select * from familias$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCiclosFamilia` (IN `pCodFamilia` VARCHAR(40))  NO SQL
+select ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCodFamilia` (IN `pFamiliaEu` VARCHAR(40))  NO SQL
+select familias.cod_familia from familias where familias.nom_familia_eu=pFamiliaEu$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1202,6 +1219,7 @@ ALTER TABLE `ciclos`
 ALTER TABLE `oferta`
   ADD CONSTRAINT `oferta_ibfk_1` FOREIGN KEY (`cod_centro`) REFERENCES `centros` (`cod_centro`),
   ADD CONSTRAINT `oferta_ibfk_2` FOREIGN KEY (`cod_ciclo`) REFERENCES `ciclos` (`cod_ciclo`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
