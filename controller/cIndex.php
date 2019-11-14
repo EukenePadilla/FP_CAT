@@ -1,9 +1,9 @@
 <?php
-include_once '../model/countryLanguageModel.php';
+include_once '../model/familiasModel.php';
 
-    $countryLanguage=new countryLanguageModel();
+    $familiasProfesionales=new familiasModel();
     
-    $countryLanguage->setOfficialLanguages();
-    $listLanguagesJson=$countryLanguage->getCountriesLanguageJson();
+    $familiasProfesionales->setAllFamiliasProfesionales();
+    $listFamiliasProfesionalesJson=$familiasProfesionales->getFamiliasProfesionalesJson();
     
-    echo $listLanguagesJson;
+    echo $listFamiliasProfesionalesJson;

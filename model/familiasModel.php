@@ -1,12 +1,28 @@
 <?php
-include_once 'countryClass.php';
+include_once 'familiasClass.php';
 include_once 'connect_data.php';
 
-class countryModel extends countryClass{
+class familiasModel extends familiasClass{
     private $link;
     private $list=array();
+    private $objCiclo;
     
-    
+    /**
+     * @return mixed
+     */
+    public function getObjCiclo()
+    {
+        return $this->objCiclo;
+    }
+
+    /**
+     * @param mixed $objCiclos
+     */
+    public function setObjCiclo($objCiclo)
+    {
+        $this->objCiclo = $objCiclo;
+    }
+
     public function OpenConnect()
     {
         $konDat=new connect_data();
@@ -33,54 +49,29 @@ class countryModel extends countryClass{
         }  
     } 
     
-    
-    function findIdCountry() // fill country : $this
+    function setAllFamiliasProfesionales() 
     {
         $this->OpenConnect();
-        $code=$this->Code;
-        $sql="call spFindIdCountry('$code')";
-         
-        $result = $this->link->query($sql);    
-         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) 
-         {    
-            $this->setName($row['Name']);
-            $this->setContinent($row['Continent']);
-            //$this->setSurfaceArea($row['SurfaceArea']);
-            //$this->setIndepYear($row['IndepYear']);
-            $this->setPopulation($row['Population']);
-            //$this->setLifeExpectancy($row['LifeExpectancy']);
-            // $this->setCapital($row['Capital']);
-         }
-         mysqli_free_result($result);
+        $sql="call spFindAllFamiliasProfesionales()";
+        $result = $this->link->query($sql);
         
-       $this->CloseConnect();
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+        {
+            $familiasProfesionales=new familiasModel();
+            
+            $familiasProfesionales->setCod_familia($row['cod_familia']);
+            $familiasProfesionales->setNom_familia_es($row['nom_familia_es']);
+            $familiasProfesionales->setNom_familia_eu($row['nom_familia_eu']);
+            
+            
+            array_push($this->list, $familiasProfesionales);
+        }
+        mysqli_free_result($result);
+        
+        $this->CloseConnect();
     }
     
-    function setListByContinent()  // fill country : $this->list
-    {  
-        $this->OpenConnect();
-        $continent=$this->Continent;
-        $sql="call spFindContinentCountries('$continent')";
-         
-        $result = $this->link->query($sql);    
-         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) 
-         {    
-            $newCountry=new countryModel();
-            $newCountry->setCode($row['Code']);
-            $newCountry->setName($row['Name']);
-            $newCountry->setContinent($row['Continent']);
-            //$newCountry->setSurfaceArea($row['SurfaceArea']);
-            //$newCountry->setIndepYear($row['IndepYear']);
-            $newCountry->setPopulation($row['Population']);
-            //$newCountry->setLifeExpectancy($row['LifeExpectancy']);
-            //$newCountry->setCapital($row['Capital']);      
-            array_push($this->list, $newCountry);
-         }
-        mysqli_free_result($result); 
-       $this->CloseConnect();
-    }
-    
-    function getListCountriesJson()   // convert country : $this->list to JSON
+    function getFamiliasProfesionalesJson()
     {
         // returns the list of objects in a srting with JSON format
         $arr=array();
@@ -89,9 +80,13 @@ class countryModel extends countryClass{
         {
             $vars = $object->getObjectVars();
             
+            if ($object->objCiclo !=null){
+                
+                $vars['objCiclo']=$object->objCiclo->getObjectVars();
+            }
             array_push($arr, $vars);
         }
         return json_encode($arr);
     }
- 
+    
 }

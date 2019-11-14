@@ -1,24 +1,24 @@
 $(document).ready(function(){
 	
 	$.ajax({  //loading page
+		//Aqui cargamos los diferentes tipos de familias profesionales que hay
        	type:"GET",
        	url: "controller/cIndex.php", 
     	dataType: "json",  //type of the result it is not necessary JSON.parse
        	
     	success: function(result){  
-       		
-    	/*	var languages =result;
+       		console.log(result);
+    	
 
-       		$("#cmbLanguage").empty(); // removes all the previous content in the container
+       		$("#FP").empty(); // removes all the previous content in the container
        		
        		var newRow ="";
-			$.each(languages,function(index,info) { 
-											
-				newRow += "<option>"+info.Language+"</option>";	
-								
-			});      		
-       		$("#cmbLanguage").append(newRow); // add the new row to the container
-*/		},
+       		for(var i=0;i<result.length;i++){
+       			newRow += "<option>"+result[i].Nom_familia_eu+"/"+result[i].Nom_familia_es+"</option>";		
+       		}
+			   		
+       		$("#FP").append(newRow); // add the new row to the container
+		},
        	error : function(xhr) {
    			alert("An error occured: " + xhr.status + " " + xhr.statusText);
    		}
