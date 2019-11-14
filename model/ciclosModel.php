@@ -54,7 +54,7 @@ class ciclosModel extends ciclosClass{
         $this->OpenConnect();
         $codFamilia=$this->Cod_familia;/* 
         var_dump($codFamilia); */
-        $codFamilia=implode($codFamilia);
+//         $codFamilia=implode($codFamilia);
         //var_dump($codFamilia);
         $sql="call spFindCiclosFamilia('$codFamilia')"; 
          
@@ -98,19 +98,22 @@ class ciclosModel extends ciclosClass{
 //                 return json_encode($arr);
 //             }
         
+function getListCiclosJson()
+{
+    // returns the list of objects in a srting with JSON format
+    $arr=array();
     
-    function getListCiclosJson()   
+    foreach ($this->list as $object)
     {
+        $vars = $object->getObjectVars();
         
-        $arr=array();
-        
-        foreach ($this->list as $object)
-        {
-            $vars = $object->getObjectVars();
+        if ($object->objFamilia !=null){
             
-            array_push($arr, $vars);
+            $vars['objFamilia']=$object->objFamilia->getObjectVars();
         }
-        return json_encode($arr);
+        array_push($arr, $vars);
     }
- 
+    return json_encode($arr);
+}
+
 }

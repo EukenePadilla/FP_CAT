@@ -3,11 +3,11 @@
 include_once '../model/ciclosModel.php';
 include_once '../model/familiasModel.php';
 
-    $selectedFamilia=filter_input(INPUT_GET,'familiaEu');
+$CodigoFamilia=filter_input(INPUT_GET,'codigoFamilia');
     
-    $familia=new familiasModel();
-    $familia->setNom_familia_eu($selectedFamilia);
-    $CodigoFamilia=$familia->setFindCodFamilia();
+//     $familia=new familiasModel();
+//     $familia->setNom_familia_eu($selectedFamilia);
+//     $CodigoFamilia=$familia->setFindCodFamilia();
     
     
     $ciclos=new ciclosModel();

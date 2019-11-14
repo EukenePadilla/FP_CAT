@@ -7,14 +7,14 @@ $(document).ready(function(){
     	dataType: "json",  //type of the result it is not necessary JSON.parse
        	
     	success: function(result){  
-//       		console.log(result);
+       		console.log(result);
     	
 
        		$("#FP").empty(); // removes all the previous content in the container
        		
        		var newRow ="";
        		for(var i=0;i<result.length;i++){
-       			newRow += "<option>"+result[i].Nom_familia_eu+"/"+result[i].Nom_familia_es+"</option>";		
+       			newRow += "<option value='"+result[i].Cod_familia+"'>"+result[i].Nom_familia_eu+"/"+result[i].Nom_familia_es+"</option>";		
        		}
 			   		
        		$("#FP").append(newRow); // add the new row to the container
@@ -32,14 +32,14 @@ $(document).ready(function(){
 		
 		var familia=$("#FP").val();
 		
-		var familiaEuEs = familia.split('/'); 
-		console.log("Familia Eu: "+familiaEuEs[0]+"  Familia Es: "+familiaEuEs[1]);
-		
+//		var familiaEuEs = familia.split('/'); 
+//		console.log("Familia Eu: "+familiaEuEs[0]+"  Familia Es: "+familiaEuEs[1]);
+//		
 		$.ajax({
 	       	type:"GET",
-	       	data:{'familiaEu':familiaEuEs[0]},
+	       	data:{'codigoFamilia':familia},
 	       	url: "controller/cFamiliaCiclos.php", 
-	       	
+	       	dataType:"json",
 	    	success: function(result){  
 	       		
 	    		console.log(result);
