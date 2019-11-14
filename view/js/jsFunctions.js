@@ -61,7 +61,7 @@ $(document).ready(function(){
 		});	
 	});  //#btnContinent.click
 	
-	$("#btnLanguage").click(function(){
+	$("#ciclosFP").change(function(){
 		var language=$("#cmbLanguage").val();
 		
 		$.ajax({
