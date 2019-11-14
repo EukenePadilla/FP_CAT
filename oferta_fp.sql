@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2019 a las 04:08:08
+-- Tiempo de generación: 14-11-2019 a las 19:24:54
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 5.6.38
 
@@ -30,7 +30,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindAllFamiliasProfesionales` () 
 select * from familias$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCiclosFamilia` (IN `pCodFamilia` VARCHAR(40))  NO SQL
-select ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
+select  ciclos.cod_ciclo,ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCodFamilia` (IN `pFamiliaEu` VARCHAR(40))  NO SQL
 select familias.cod_familia from familias where familias.nom_familia_eu=pFamiliaEu$$
