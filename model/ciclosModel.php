@@ -52,8 +52,11 @@ class ciclosModel extends ciclosClass{
     function setListByFamilia() 
     {  
         $this->OpenConnect();
-        $codFamilia=$this->Cod_familia;
-        $sql="call spFindCiclosFamilia('$codFamilia')"; // Object of class familiasModel could not be converted to string in 
+        $codFamilia=$this->Cod_familia;/* 
+        var_dump($codFamilia); */
+        $codFamilia=implode($codFamilia);
+        //var_dump($codFamilia);
+        $sql="call spFindCiclosFamilia('$codFamilia')"; 
          
 /*         DELIMITER $$
         CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCiclosFamilia`(IN `pCodFamilia` VARCHAR(40))

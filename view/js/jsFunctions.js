@@ -39,7 +39,6 @@ $(document).ready(function(){
 	       	type:"GET",
 	       	data:{'familiaEu':familiaEuEs[0]},
 	       	url: "controller/cFamiliaCiclos.php", 
-	    	dataType: "json",  //type of the result it is not necessary JSON.parse
 	       	
 	    	success: function(result){  
 	       		

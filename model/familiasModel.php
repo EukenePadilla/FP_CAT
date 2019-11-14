@@ -97,7 +97,7 @@ class familiasModel extends familiasClass{
                      
                  mysqli_free_result($result);
                $this->CloseConnect();
-               return $this;
+               return $row;
                
               
     }
