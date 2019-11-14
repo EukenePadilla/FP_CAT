@@ -9,7 +9,6 @@ $CodigoFamilia=filter_input(INPUT_GET,'codigoFamilia');
 //     $familia->setNom_familia_eu($selectedFamilia);
 //     $CodigoFamilia=$familia->setFindCodFamilia();
     
-    
     $ciclos=new ciclosModel();
     $ciclos->setCod_familia($CodigoFamilia);
     

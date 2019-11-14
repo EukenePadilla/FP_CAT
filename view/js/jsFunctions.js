@@ -35,15 +35,17 @@ $(document).ready(function(){
 //		var familiaEuEs = familia.split('/'); 
 //		console.log("Familia Eu: "+familiaEuEs[0]+"  Familia Es: "+familiaEuEs[1]);
 //		
+		console.log(familia);
 		$.ajax({
 	       	type:"GET",
 	       	data:{'codigoFamilia':familia},
 	       	url: "controller/cFamiliaCiclos.php", 
-	       	dataType:"json",
+	       	dataType:"text",
 	    	success: function(result){  
 	       		
+	    		result= JSON.parse(result.slice(3));
 	    		console.log(result);
-	    		
+
 //	       		var countries =result;
 //	
 //	       		$("#continentCountries").empty(); // removes all the previous content in the container

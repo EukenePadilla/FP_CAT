@@ -52,17 +52,10 @@ class ciclosModel extends ciclosClass{
     function setListByFamilia() 
     {  
         $this->OpenConnect();
-        $codFamilia=$this->Cod_familia;/* 
-        var_dump($codFamilia); */
-//         $codFamilia=implode($codFamilia);
-        //var_dump($codFamilia);
+        $codFamilia=$this->Cod_familia;
+  
         $sql="call spFindCiclosFamilia('$codFamilia')"; 
          
-/*         DELIMITER $$
-        CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCiclosFamilia`(IN `pCodFamilia` VARCHAR(40))
-        NO SQL
-        select ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
-        DELIMITER ; */
         
         
         $result = $this->link->query($sql);    
@@ -75,10 +68,15 @@ class ciclosModel extends ciclosClass{
             
             array_push($this->list, $newCiclo);
          }
+         
         mysqli_free_result($result); 
        $this->CloseConnect();
     }
-    
+    /*         DELIMITER $$
+     CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCiclosFamilia`(IN `pCodFamilia` VARCHAR(40))
+     NO SQL
+     select ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
+     DELIMITER ; */
     
 //     function getListCiclosJson() // convert countryLanguage : $this->list to JSON
 //         {
@@ -100,7 +98,7 @@ class ciclosModel extends ciclosClass{
         
 function getListCiclosJson()
 {
-    // returns the list of objects in a srting with JSON format
+   
     $arr=array();
     
     foreach ($this->list as $object)
