@@ -7,6 +7,7 @@ $(document).ready(function(){
     	dataType: "json",  //type of the result it is not necessary JSON.parse
        	
     	success: function(result){  
+    		console.log("familias");
        		console.log(result);
     	
 
@@ -36,8 +37,7 @@ $(document).ready(function(){
 		
 //		var familiaEuEs = familia.split('/'); 
 //		console.log("Familia Eu: "+familiaEuEs[0]+"  Familia Es: "+familiaEuEs[1]);
-//		
-		console.log(familia);
+
 		$.ajax({
 	       	type:"GET",
 	       	data:{'codigoFamilia':familia},
@@ -45,8 +45,9 @@ $(document).ready(function(){
 	       	dataType:"text",
 	    	success: function(result){  
 	       		$("#ciclosFP").empty(); // removes all the previous content in the container
+	    		console.log("ciclos");
 
-	    		result= JSON.parse(result.slice(3));
+   		result= JSON.parse(result);
 	    		console.log(result);
 	       		var newRow="";
 	       		for(var i=0;i<result.length;i++){
@@ -62,36 +63,57 @@ $(document).ready(function(){
 	});  //#btnContinent.click
 	
 	$("#ciclosFP").change(function(){
-		var language=$("#cmbLanguage").val();
+		var cicloCode=$("#ciclosFP").val();
 		
 		$.ajax({
 	       	type:"GET",
-	       	data:{ 'language':language},
-	       	url: "controller/cCountriesLanguages.php", 
+	       	data:{ 'cod_ciclo':cicloCode},
+	       	url: "controller/cCicloCentro.php", 
 	    	dataType: "json",  //type of the result it is not necessary JSON.parse
 	       	
-	    	success: function(result){  
+	    	success: function(result){ 
+	    		console.log("centros");
+
+	       		console.log(result);
 	       		
-	    		var countries =result;
-	
-	       		$("#continentCountries").empty(); // removes all the previous content in the container
+	    		$("#tablaCentrosPorCiclo").empty(); // removes all the previous content in the container
 	       		
-	       		var newRow ="<h2>Countries with official "+ language+" language</h2>";
-	  			newRow +="<table > ";
-				newRow +="<tr><th>COUNTRY</th><th>CONTINENT</th><th>CODE</th><th>POPULATION</th></tr>";
+	       		var newRow ="<table > ";
+				newRow +="<tr><th>School</th><th>Town</th><th>Territory</th><th>Model</th><th>Turn</th></tr>";
 	       		
-				$.each(countries,function(index,info) { 
-												
-					newRow += "<tr>" +"<td>"+info.objCountry.Name+"</td>"
-										+"<td>"+info.objCountry.Continent+"</td>"
-										+"<td>"+info.objCountry.Code+"</td>"
-										+"<td>"+info.objCountry.Population+"</td>"
-										
+				$.each(result,function(index,info) { 
+							
+					newRow += "<tr>" +"<td><a href='view/vSchoolOffer.php?cod_school="+info.objCentro.Cod_centro
+					                                   +"&name_school="+info.objCentro.Nom_centro+"'>"+info.objCentro.Nom_centro+"</a></td>"
+										+"<td>"+info.objCentro.Municipio+"</td>"
+										+"<td>"+info.objCentro.Territorio+"</td>"
+										+"<td>"+info.Modelo+"</td>"	
+										+"<td>"+info.Turno+"</td>"	
 									+"</tr>";	
 				});
 	       		newRow +="</table>";   
 	       		
-	       		$("#continentCountries").append(newRow); // add the new row to the container
+	       		$("#tablaCentrosPorCiclo").append(newRow);
+//	    		var countries =result;
+//	
+//	       		$("#continentCountries").empty(); // removes all the previous content in the container
+//	       		
+//	       		var newRow ="<h2>Countries with official "+ language+" language</h2>";
+//	  			newRow +="<table > ";
+//				newRow +="<tr><th>COUNTRY</th><th>CONTINENT</th><th>CODE</th><th>POPULATION</th></tr>";
+//	       		
+//				$.each(countries,function(index,info) { 
+//												
+//					newRow += "<tr>" +"<td>"+info.objCountry.Name+"</td>"
+//										+"<td>"+info.objCountry.Continent+"</td>"
+//										+"<td>"+info.objCountry.Code+"</td>"
+//										+"<td>"+info.objCountry.Population+"</td>"
+//										
+//									+"</tr>";	
+//				});
+//	       		newRow +="</table>";   
+//	       		
+//	       		$("#continentCountries").append(newRow); // add the new row to the container
 			},
 	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);

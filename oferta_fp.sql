@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2019 a las 19:24:54
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 5.6.38
+-- Tiempo de generación: 18-11-2019 a las 09:34:53
+-- Versión del servidor: 10.4.8-MariaDB
+-- Versión de PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -29,11 +29,17 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindAllFamiliasProfesionales` ()  NO SQL
 select * from familias$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCentroIdCentros` (IN `pCod_centro` VARCHAR(32))  NO SQL
+select centros.nom_centro,centros.municipio,centros.territorio from centros where centros.cod_centro=pCod_centro$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCiclosFamilia` (IN `pCodFamilia` VARCHAR(40))  NO SQL
-select  ciclos.cod_ciclo,ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
+select ciclos.cod_ciclo,ciclos.nom_ciclo_eu,ciclos.nom_ciclo_es from ciclos where ciclos.cod_familia=pCodFamilia$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindCodFamilia` (IN `pFamiliaEu` VARCHAR(40))  NO SQL
 select familias.cod_familia from familias where familias.nom_familia_eu=pFamiliaEu$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spFindOfertaIdCiclo` (IN `pCod_ciclo` VARCHAR(30))  NO SQL
+select distinct(oferta.cod_ciclo), oferta.cod_centro,oferta.modelo,oferta.turno from oferta inner join centros where oferta.cod_ciclo=pCod_ciclo$$
 
 DELIMITER ;
 
@@ -46,7 +52,7 @@ DELIMITER ;
 CREATE TABLE `centros` (
   `territorio` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
   `dependencia` varchar(18) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `cod_centro` int(6) NOT NULL DEFAULT '0',
+  `cod_centro` int(6) NOT NULL DEFAULT 0,
   `nom_centro` varchar(51) COLLATE utf8_spanish_ci DEFAULT NULL,
   `direccion` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL,
   `municipio` varchar(34) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -389,7 +395,7 @@ INSERT INTO `familias` (`cod_familia`, `nom_familia_eu`, `nom_familia_es`) VALUE
 --
 
 CREATE TABLE `oferta` (
-  `codigo` int(3) NOT NULL DEFAULT '0',
+  `codigo` int(3) NOT NULL DEFAULT 0,
   `cod_ciclo` varchar(5) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `cod_centro` int(6) DEFAULT NULL,
   `modelo` varchar(11) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,

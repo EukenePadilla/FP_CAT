@@ -14,6 +14,7 @@
 			
 			<select id='ciclosFP'></select><br>
 
+			<div id='tablaCentrosPorCiclo'></div>
 		</div>
 		<!-- nav -->
 		

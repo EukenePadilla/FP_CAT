@@ -1,4 +1,4 @@
-// <?php
+ <?php
 include_once 'ciclosClass.php';
 include_once 'connect_data.php';
 
